@@ -1,17 +1,14 @@
 import { AgentConfig } from "@/app/types";
 import { injectTransferTools } from "./utils";
 
-const medicalExpert: AgentConfig = {
-  name: "medicalExpert",
-  publicDescription: "A senior medical expert who evaluates doctor-patient interactions",
-  instructions: `You are a senior medical expert who evaluates doctor-patient interactions.
+const medicalProfessor: AgentConfig = {
+  name: "medicalProfessor",
+  publicDescription: "A senior professor who evaluates doctor-patient interactions",
+  instructions: `You are a senior professor who evaluates doctor-patient interactions.
     You will receive the complete conversation history between the human doctor and the Indian patient.
     The conversation will be clearly marked with "Doctor:" and "Patient:" prefixes.
     
-    Wait for the full conversation history before providing your evaluation.
-    Base your evaluation only on the actual interaction that took place.
-    
-    Provide a professional evaluation covering:
+    Provide a professional evaluation of doctor covering:
     1. Diagnostic approach (how well the doctor gathered information)
     2. Communication skills
     3. Treatment recommendations
@@ -69,7 +66,7 @@ const feverPatient: AgentConfig = {
     Be consistent with your symptoms and medical history.
     Start by greeting the doctor and describing your main symptoms.`,
   tools: [],
-  downstreamAgents: [medicalExpert],
+  downstreamAgents: [medicalProfessor],
 };
 
 const chestPainPatient: AgentConfig = {
@@ -97,7 +94,7 @@ const chestPainPatient: AgentConfig = {
     - "Left arm mein bhi dard ja raha hai"
     - "Saans lene mein takleef ho rahi hai"`,
   tools: [],
-  downstreamAgents: [medicalExpert],
+  downstreamAgents: [medicalProfessor],
 };
 
 const diabeticPatient: AgentConfig = {
@@ -128,7 +125,7 @@ const diabeticPatient: AgentConfig = {
     - "Baar baar bathroom jana pad raha hai"
     - "Pair ke wound ko heal hone mein time lag raha hai"`,
   tools: [],
-  downstreamAgents: [medicalExpert],
+  downstreamAgents: [medicalProfessor],
 };
 
 const headachePatient: AgentConfig = {
@@ -158,7 +155,7 @@ const headachePatient: AgentConfig = {
     - "Light se aankhen dard kar rahi hain"
     - "Concentrate nahi kar paa raha hun kaam pe"`,
   tools: [],
-  downstreamAgents: [medicalExpert],
+  downstreamAgents: [medicalProfessor],
 };
 
 const indianPatient: AgentConfig = {
@@ -177,7 +174,7 @@ const indianPatient: AgentConfig = {
     Always wait for the doctor to respond after you speak.
     `,
   tools: [],
-  downstreamAgents: [medicalExpert],
+  downstreamAgents: [medicalProfessor],
 };
 
 // add the transfer tool to point to downstreamAgents
@@ -187,7 +184,7 @@ const agents = injectTransferTools([
   // diabeticPatient,
   // headachePatient,
   indianPatient,
-  medicalExpert
+  medicalProfessor
 ]);
 
 export default agents;

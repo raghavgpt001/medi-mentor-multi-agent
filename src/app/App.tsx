@@ -25,6 +25,8 @@ import { createRealtimeConnection } from "./lib/realtimeConnection";
 // Agent configs
 import { allAgentSets, defaultAgentSetKey } from "@/app/agentConfigs";
 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 function App() {
   const searchParams = useSearchParams();
 
@@ -87,8 +89,8 @@ function App() {
 
     const agents = allAgentSets[finalAgentConfig];
     let agentKeyToUse = "";
-    if (finalAgentConfig === "medicalExpert") {
-      agentKeyToUse = agents[1]?.name || ""; // medicalExpert
+    if (finalAgentConfig === "medicalProfessor") {
+      agentKeyToUse = agents[1]?.name || ""; // medicalProfessor
     } else {
       agentKeyToUse = agents[0]?.name || ""; // stomachPainPatient
     }
@@ -184,7 +186,7 @@ function App() {
     }
   };
 
-  const disconnectFromRealtime = () => {
+  const disconnectFromRealtime = async () => {
     if (pcRef.current) {
       // First transfer to medical expert for evaluation
       if (selectedAgentConfigSet && selectedAgentName === "stomachPainPatient") {
@@ -199,27 +201,30 @@ function App() {
           })
           .join("\n");
 
-        sendClientEvent(
-          {
-            type: "conversation.item.create",
-            item: {
-              type: "message",
-              role: "user",
-              content: [{ 
-                type: "input_text", 
-                text: `Here is the complete consultation that needs evaluation:\n\n${conversationHistory}\n\nPlease provide your evaluation.` 
-              }],
-            },
-          },
-          "send conversation history"
-        );
         console.log("Transferring to medical expert for evaluation");
-        setSelectedAgentName("medicalExpert");
-
-        sendClientEvent(
-          { type: "response.create" },
-          "trigger expert evaluation"
-        );
+        setSelectedAgentName("medicalProfessor");
+  
+        setTimeout(() => {
+          sendClientEvent(
+            {
+              type: "conversation.item.create",
+              item: {
+                type: "message",
+                role: "user",
+                content: [{ 
+                  type: "input_text", 
+                  text: `Here is the complete consultation that needs evaluation:\n\n${conversationHistory}\n\nPlease provide your evaluation.` 
+                }],
+              },
+            },
+            "send conversation history"
+          );
+        
+          sendClientEvent(
+            { type: "response.create" },
+            "trigger expert evaluation"
+          );
+        }, 3000); // Delay for 3 seconds
       }
 
       // Then proceed with normal disconnect after a longer delay
