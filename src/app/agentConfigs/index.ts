@@ -1,10 +1,8 @@
 import { AllAgentConfigsType } from "@/app/types";
-import simpleExample from "./simpleExample";
+import patientScenarios from "./patientScenarios";
 
 export const allAgentSets: AllAgentConfigsType = {
-  // frontDeskAuthentication,
-  // customerServiceRetail,
-  simpleExample,
+  patientScenarios,
 };
 
-export const defaultAgentSetKey = "simpleExample";
+export const defaultAgentSetKey = "patientScenarios";

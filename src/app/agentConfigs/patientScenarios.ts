@@ -158,7 +158,7 @@ const headachePatient: AgentConfig = {
   downstreamAgents: [medicalProfessor],
 };
 
-const indianPatient: AgentConfig = {
+const stomachPainPatient: AgentConfig = {
   name: "stomachPainPatient",
   publicDescription: "Patient with acute stomach pain",
   instructions: `You are a 32-year-old Indian male patient with severe stomach pain.
@@ -183,7 +183,7 @@ const agents = injectTransferTools([
   // chestPainPatient,
   // diabeticPatient,
   // headachePatient,
-  indianPatient,
+  stomachPainPatient,
   medicalProfessor
 ]);
 
